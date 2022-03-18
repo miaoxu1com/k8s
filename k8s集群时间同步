@@ -2,3 +2,6 @@ https://blog.csdn.net/weixin_36161071/article/details/116579282
 https://blog.csdn.net/q35445762/article/details/91355733
 https://www.linuxprobe.com/centos7-ntp-time.html
 https://www.cnblogs.com/operationhome/p/9060998.html
+
+
+修改时间 系统时间 修改硬件时间  安装时间同步  关闭防火墙 selinux  重启master  worker
