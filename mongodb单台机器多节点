@@ -1,6 +1,6 @@
 https://www.cnblogs.com/bubbleboom/p/14167409.html
 https://blog.csdn.net/qq_42371913/article/details/113995745
-
+http://www.manongjc.com/detail/18-cwhjgfrdexqyxof.html
 3、创建数据目录
 这里是通过指定3个不同的端口来模拟实现三台主机的效果，以MongoDB的默认端口27017作为主节点，27018和27019作为从节点，并且在主机上建立三个不同的文件夹作为数据库存储；现在请按照以下配置创建好目录：
 
