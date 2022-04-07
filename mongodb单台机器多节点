@@ -1,0 +1,33 @@
+https://www.cnblogs.com/bubbleboom/p/14167409.html
+https://blog.csdn.net/qq_42371913/article/details/113995745
+
+3、创建数据目录
+这里是通过指定3个不同的端口来模拟实现三台主机的效果，以MongoDB的默认端口27017作为主节点，27018和27019作为从节点，并且在主机上建立三个不同的文件夹作为数据库存储；现在请按照以下配置创建好目录：
+
+mkdir –p /var/lib/mongo_27017
+
+mkdir –p /var/lib/mongo_27018
+
+mkdir –p /var/lib/mongo_27019
+
+4、指定数据目录和日志目录，启动服务
+setsid /usr/local/mongodb/bin/mongod --dbpath /var/lib/mongo_27017 --bind_ip_all --logpath /var/log/mongo_27017/mongod.log --port 27017 --replSet rs &
+
+setsid /usr/local/mongodb/bin/mongod --dbpath /var/lib/mongo_27018 --bind_ip_all --logpath /var/log/mongo_27018/mongod.log --port 27018 --replSet rs &
+
+setsid /usr/local/mongodb/bin/mongod --dbpath /var/lib/mongo_27019 --bind_ip_all --logpath /var/log/mongo_27019/mongod.log --port 27019 --replSet rs &
+
+2、创建并编辑rc.local文件
+vi /etc/rc.local
+
+添加需要执行的脚本内容
+
+#!/bin/sh -e
+
+setsid /usr/local/mongodb/bin/mongod --dbpath /var/lib/mongo_27017 --bind_ip_all --logpath /var/log/mongo_27017/mongod.log --port 27017 --replSet rs &
+
+setsid /usr/local/mongodb/bin/mongod --dbpath /var/lib/mongo_27018 --bind_ip_all --logpath /var/log/mongo_27018/mongod.log --port 27018 --replSet rs &
+
+setsid /usr/local/mongodb/bin/mongod --dbpath /var/lib/mongo_27019 --bind_ip_all --logpath /var/log/mongo_27019/mongod.log --port 27019 --replSet rs &
+
+exit 0
