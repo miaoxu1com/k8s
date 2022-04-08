@@ -36,7 +36,13 @@ setsid /usr/local/mongodb/bin/mongod --dbpath /var/lib/mongo_27019 --bind_ip_all
 exit 0
 
 
-
+db.createUser(
+     {
+       user:"maxsu",
+       pwd:"pwd123",
+       roles:[{role:"root",db:"admin"}]
+     }
+  )
 
 
 
