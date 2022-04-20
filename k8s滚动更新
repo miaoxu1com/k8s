@@ -1,3 +1,6 @@
 https://www.cnblogs.com/wukc/p/13414246.html
 https://blog.csdn.net/xjjj064/article/details/119105146
 https://blog.csdn.net/wy_hhxx/article/details/119700710
+
+
+kubectl apply -k .
