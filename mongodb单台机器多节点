@@ -4,6 +4,14 @@ http://www.manongjc.com/detail/18-cwhjgfrdexqyxof.html
 https://www.cnblogs.com/yizhangheka/p/12175108.html
 https://www.hangge.com/blog/cache/detail_3156.html
 https://blog.csdn.net/weixin_36492969/article/details/81009298
+
+https://blog.csdn.net/csdnhsh/article/details/95769113/
+https://www.bianchengquan.com/article/360279.html
+
+
+重点
+https://blog.csdn.net/FeenixOne/article/details/120693060
+http://blog.itpub.net/29785807/viewspace-2681969/
 3、创建数据目录
 这里是通过指定3个不同的端口来模拟实现三台主机的效果，以MongoDB的默认端口27017作为主节点，27018和27019作为从节点，并且在主机上建立三个不同的文件夹作为数据库存储；现在请按照以下配置创建好目录：
 
@@ -38,7 +46,8 @@ setsid /usr/local/mongodb/bin/mongod --dbpath /var/lib/mongo_27019 --bind_ip_all
 
 exit 0
 
-
+直接加密启动就行
+use admin  
 db.createUser(
      {
        user:"maxsu",
