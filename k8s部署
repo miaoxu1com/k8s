@@ -11,3 +11,4 @@ https://blog.csdn.net/monarch91/article/details/122713509
 https://www.cnblogs.com/lxc123/p/14432936.html
 
 apt-cache madision kubectl
+apt-get install kubectl=1.21.0-00 kubectl=1.21.0-00 kubeadm=1.21.0-00
