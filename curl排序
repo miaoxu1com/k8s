@@ -1,5 +1,6 @@
 curl -s -u "admin:Harbor12345" -X GET -H "Content-Type: application/json" "http://10.156.2.38/api/repositories/cloud/accessservice/tags/" |grep "digest" -C 2 |grep ""name""
 
+curl -s -u "admin:Harbor12345" -X GET -H "Content-Type: application/json" "http://10.156.2.38/api/repositories/cloud/accessservice/tags/" |grep "digest" -C 2 |grep ""name""|sort -ur
 
 curl -u "admin:Harbor12345" -X GET -H "Content-Type: application/json" "http://10.156.2.38/api/projects/3"
 
