@@ -1,2 +1,10 @@
 https://blog.csdn.net/windless0530/article/details/54911421
 https://www.cnblogs.com/time-is-life/p/8351756.html
+
+vi /etc/security/limits.conf
+*               hard    nofile            65535
+*               soft    nofile            65535
+root            hard    nofile            65535
+root            soft    nofile            65535
+
+重新打开shell
