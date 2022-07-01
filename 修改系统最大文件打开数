@@ -8,3 +8,4 @@ root            hard    nofile            65535
 root            soft    nofile            65535
 
 重新打开shell
+/usr/bin/mongod --dbpath /var/lib/mongo_27017 --bind_ip_all --logpath /var/log/mongo_27017/mongod.log --port 27017 --replSet rs --maxConns 200000 --keyFile /etc/mongo/access.key --auth --fork
