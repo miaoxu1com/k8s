@@ -1,2 +1,4 @@
 https://blog.csdn.net/agonie201218/article/details/120632984
 https://www.cnblogs.com/cheyunhua/p/14474452.html
+添加污点可以不让k8s调度pod部署到节点上  --但是手动指定节点还是可以部署到污点节点上
+驱逐节点可以优雅的实现pod的迁移
