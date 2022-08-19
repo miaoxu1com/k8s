@@ -8,9 +8,13 @@ iptables -t filter -nvL INPUT
 ping完之后 arp才能查看局域网ip
 
 netstat -tulnp
+https://blog.csdn.net/m0_37556444/article/details/83000553
 telnet
 dig
 ss
+https://blog.csdn.net/tiancityycf/article/details/106531143
+https://www.jianshu.com/p/75266bc39eb4
+
 route -n
 tcpdump
 https://www.jianshu.com/p/d9162722f189
