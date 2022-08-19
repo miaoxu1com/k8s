@@ -6,3 +6,10 @@ iptables -t filter -nvL INPUT
 
 
 ping完之后 arp才能查看局域网ip
+
+netstat -tulnp
+telnet
+dig
+ss
+route -n
+tcpdump
