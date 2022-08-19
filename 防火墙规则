@@ -3,3 +3,6 @@ https://blog.csdn.net/chengxuyuanyonghu/article/details/51897666
 iptables -I 插入规则
 iptables -A 追加规则
 iptables -t filter -nvL INPUT 
+
+
+ping完之后 arp才能查看局域网ip
