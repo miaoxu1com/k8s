@@ -1,0 +1,6 @@
+#只打印错误信息
+import logging
+logging.basicConfig(level=logging.ERROR,
+                    format='%(asctime)s %(filename)s line:%(lineno)d %(levelname)s:%(message)s', datefmt="%H-%m-%d %H:%M:%S")
+logging.debug("这是一个测试")
+logging.error("这是一个错误消息")
