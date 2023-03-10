@@ -1,1 +1,179 @@
 https://blog.csdn.net/nkguohao/article/details/44412975
+#!/usr/bin/python3.7
+# -*- coding: utf-8 -*-
+import distutils.dir_util
+import os
+import requests
+import urllib.request
+from lxml import etree
+import re
+import zipfile
+import shutil
+import time
+import sys
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from time import sleep
+import random
+import datetime
+import gc
+import wget
+from urllib import parse
+from scrapy import Field,Item
+
+
+# 取包服务器的地址，一般来说这个参数不要变动，除非服务器IP地址发生了变更
+update_server = r"远程下载路径"
+
+
+exit()
+
+# 想要取包的时间
+def get_file_date():
+    # 请求网页
+    resu = urllib.request.urlopen(update_server, data=None, timeout=10)
+    result = resu.read().decode("utf-8")
+    tree = etree.HTML(result)
+
+    # 获得当前包的列表
+    container_list = tree.xpath('/html/body/ul/li/a/text()')
+    for i in reversed(container_list):
+        date_file = re.findall("\d{4}-\d{2}-\d{2}_\d{6}", i)  # 匹配日期
+        if len(date_file) != 0:
+            # print(len(date_file))
+            break
+
+    return date_file[0]
+
+
+new_date = get_file_date()
+
+# 上面两个参数拼接就是完整的取包路径
+path_get_packets = update_server + new_date
+# path_get_packets = '远程下载路径'
+
+# 递归url
+exist_url = []  # 存放已爬取的网页
+writeCount = 0
+urls = []
+
+
+def load(url):
+    # 检查该url是否爬过
+    # 爬取URL
+    global writeCount
+    req = requests.get(url)
+    html = req.content
+    # urls.append(url)
+    print(html)
+    # 正则表达式提取子链接
+    con = re.findall(r'href="连接特征"', html.decode('utf-8'))
+
+    # 存入所有子链接
+    for x in range(0, len(con)):
+        url2 = con[x]
+        url1 = url  # 解析网页中所有子URL
+        # 将链接拼接
+        newUrl = parse.urljoin(url1, url2)
+        urls.append(newUrl)
+    print(urls)
+
+    # 去掉已爬取的链接和重复链接
+    unique_list = list(set(urls) - set(exist_url))
+    print(unique_list)
+    # 遍历所有子URL再次调用
+    # for i in range(0, len(unique_list)):
+    #     load(unique_list[i])
+
+
+load(path_get_packets)
+exit()
+
+# 存放升级包的路径，按照这个格式进行定义：  path_store_packets = r"\\10.156.1.1\升级包-msg\08-XAP3.1.0_MTK AP"
+path_store_packets = r"远程的下载路径"
+
+
+# 下载最新的升级包
+def download_packets(newest_package):
+    print("正在下载升级包，请稍等片刻…………")
+    server_path = '爬取的目录'
+    urllib.request.urlretrieve(
+        "远程数据",
+        "本地目录")
+
+
+# 上传解压后的升级包
+def upload_file(local_path, upload_dir):
+    # 上传文件
+    try:
+        print("目标路径:" + upload_dir)
+        print("当前路径:" + local_path)
+        print("正在上传升级包，请稍等片刻…………")
+        shutil.copytree(local_path, upload_dir)
+        # distutils.dir_util.copy_tree(local_path, upload_dir)
+
+    except Exception as error:
+        print(error)
+
+    print("升级包上传完成！")
+
+
+def del_file(current_path):
+    print("当前脚本的路径:%s" % current_path)
+    files = [file for file in os.listdir(current_path)]
+    print("当前路径下的文件：%s" % files)
+
+    for i in os.listdir(current_path):  # 获得当前路径下的文件
+        print("文件:%s" % i)
+        path_file = os.path.join(current_path, i)  # 取文件绝对路径
+        print("文件绝对路径为:%s" % (path_file))
+        # 文件夹在删除的时候，会把本身删除掉，需要更改脚本本身文件的名字。get_package，防止被删除
+        if os.path.isfile(path_file):
+            if "down.py" in path_file:
+                continue
+            else:
+                print("删除文件：%s" % path_file)
+                os.remove(path_file)
+        else:
+            del_file(path_file)
+    try:
+        os.removedirs(current_path)
+    except Exception as error:
+        print(error)
+
+    print("删除本地文件完成")
+
+
+if __name__ == "__main__":
+    # 最新的升级包
+    newest_package = get_file_date()
+
+    # 从升级包中提取日期
+    today_date = newest_package.split("_")[0]
+
+    # 升级包的本地路径和上传路径
+    local_path = os.path.split(os.path.realpath(__file__))[0] + '\\' + newest_package
+    upload_dir = path_store_packets + '\\' + newest_package
+    print(today_date)
+
+    # 判断升级包是否已经保存在本地（下载过）
+    flag = os.path.exists(local_path)
+    # 如果不是，则说明有新包，删除本地的旧包，然后下载新包
+    if (flag == False):
+        # 删除本地文件
+        try:
+            del_file(os.path.split(os.path.realpath(__file__))[0])
+            print("")
+        except Exception as error1:
+            print(error1)
+
+        # 下载升级包
+        download_packets(newest_package)
+
+        # 解压完成的升级包
+        # un_zip(local_path)
+
+        # 上传升级包
+        upload_file(local_path, upload_dir)
+    else:
+        print("当前升级包已是最新，无需重新下载！")
