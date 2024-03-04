@@ -27,3 +27,6 @@ https://cn.bing.com/search?q=--network%3Dhost&PC=U316&FORM=CHROMN
 
 Docker网络（host、bridge、none）详细介绍
 https://blog.csdn.net/heian_99/article/details/104914945
+
+
+centos7还是靠谱不需要依赖网络， ubuntu22.0.4  ubuntu22.10都需要网络
