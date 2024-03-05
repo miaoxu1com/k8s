@@ -22,6 +22,8 @@ http://blog.sina.com.cn/s/blog_3f83aa130100s8jo.html
 http://blog.51cto.com/13683137989/1880744 
 详细介绍了ip_forward与路由转发，并通过实验验证内网和外网之间进行通信的路由设置。
 
+IPtables中SNAT、DNAT和MASQUERADE的含义
+
 --network=host
 https://cn.bing.com/search?q=--network%3Dhost&PC=U316&FORM=CHROMN
 
