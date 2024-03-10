@@ -12,6 +12,13 @@ linux ip 转发设置 ip_forward、ip_forward与路由转发
 所谓转发即当主机拥有多于一块的网卡时，其中一块收到数据包，根据数据包的目的ip地址将包发往本机另一网卡，该网卡根据路由表继续发送数据包。
 这通常就是路由器所要实现的功能。
 
+
+基础镜像
+https://blog.csdn.net/easylife206/article/details/120662654
+
+brctl安装
+https://cn.bing.com/search?q=brctl%E5%AE%89%E8%A3%85&pq=brctl&cvid=ADA6D952D941432C96986213BC26789C&FORM=QBRE&lq=0
+
 设置 
 Linux系统缺省并没有打开IP转发功能，要确认IP转发功能的状态，可以查看/proc文件系统，使用下面命令： cat /proc/sys/net/ipv4/ip_forward 如果上述文件中的值为0,说明禁止进行IP转发；
 如果是1,则说明IP转发功能已经打开。 要想打开IP转发功能，可以直接修改上述文件： echo 1 > /proc/sys/net/ipv4/ip_forward 把文件的内容由0修改为1。禁用IP转发则把1改为0。
