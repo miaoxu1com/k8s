@@ -1,0 +1,26 @@
+$currentDirectoryPath = Get-Location
+$directoryName = Split-Path -Path $currentDirectoryPath -Leaf
+
+function Update-SessionPath {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$NewPathItem
+    )
+    $userPath = [Environment]::GetEnvironmentVariable('Path', 'User')
+    if (-not ($userPath -split ';' -contains $NewPathItem)) {
+        [Environment]::SetEnvironmentVariable('Path', "$userPath;$NewPathItem", 'User')
+    }else{
+        Write-Host "Current directory is already in the PATH."
+    }
+       $env:Path += ";$NewPathItem"
+}
+
+if ($directoryName -match '^[a-zA-Z0-9_]+$') {
+    [Environment]::SetEnvironmentVariable($directoryName, $currentDirectoryPath, 'User')
+    Update-SessionPath -NewPathItem $currentDirectoryPath		
+    $currentPath = [Environment]::GetEnvironmentVariable('Path', 'User') -as [string[]]
+     Write-Host "Current directory: $($currentDirectoryPath)"
+     Write-Host "New environment variable created: $directoryName=$($currentDirectoryPath)"
+} else {
+    Write-Host "Invalid directory name. It can only contain alphanumeric characters and underscores."
+}
