@@ -24,3 +24,7 @@ if ($directoryName -match '^[a-zA-Z0-9_]+$') {
 } else {
     Write-Host "Invalid directory name. It can only contain alphanumeric characters and underscores."
 }
+
+notepad $PROFILE
+setenv.ps1路径添加到path中，所有路径都要添加到path中才行
+New-Alias -Name setenv -Value "setenv.ps1"
