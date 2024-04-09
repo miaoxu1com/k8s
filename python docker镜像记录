@@ -1,4 +1,5 @@
 
+ubuntu很容易遇到错误  无论是实体机还是 构建镜像作为基础镜像
 另外就是构建的时候使用
 .dockerigonre
 先要apt-get upate 因为debian 容器中默认没有安装缓存 先要更新获取安装包缓存 自己分阶段加 pip安装无缓存 apt-get 无缓存  加清理缓存 构建的python镜像还是没有官方的 python:slim镜像小
