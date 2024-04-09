@@ -2,6 +2,7 @@ FROM debian AS builder-image
 
 # avoid stuck build due to user prompt
 ARG DEBIAN_FRONTEND=noninteractive
+ARG --security-opt seccomp:unconfined
 # 可能会用到 ln -s /usr/bin/pip3 /usr/bin/pip && ln -s /usr/bin/python3 /usr/bin/python
 # 可能会用到 pip3 install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple
 # 可能会用到 rm -rf /var/lib/apt/lists/* && rm /tmp/requirements.txt
