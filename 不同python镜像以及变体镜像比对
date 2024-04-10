@@ -1,0 +1,15 @@
+REPOSITORY                                 TAG                  IMAGE ID       CREATED        SIZE
+debian                                     12-slim              35a0e8114244   9 hours ago    74.8MB
+debian                                     12                   e15dbfac2d2b   9 hours ago    117MB
+python                                     v3                   c9e9e86859cd   30 hours ago   193MB
+<none>                                     <none>               909bf733cb47   30 hours ago   563MB
+<none>                                     <none>               38e8779e727f   32 hours ago   77.9MB
+<none>                                     <none>               60398c0c5c93   32 hours ago   72.8MB
+linuxcontainers/debian-slim                latest               31a559ee2837   33 hours ago   81.4MB
+python                                     3.11-alpine3.18      f78601fd3a0f   6 days ago     52.3MB
+python                                     3.11-slim-bookworm   c516402fec78   6 days ago     131MB
+python                                     slim                 23cd4350f4bd   2 weeks ago    130MB
+python                                     3.8-alpine           afb844bcda63   2 weeks ago    47.6MB
+debian                                     latest               c978d997d5fe   4 weeks ago    116MB
+ubuntu                                     22.04                ca2b0f26964c   6 weeks ago    77.9MB
+m.daocloud.io/k8s.gcr.io/coredns/coredns   latest               cbb01a7bd410   7 months ago   59.8MB
