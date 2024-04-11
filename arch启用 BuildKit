@@ -6,7 +6,11 @@ arch 永久启动BuildKit
 开启 buildx 功能
 默认情况下，buildx 已经在安装包里面了
 在 ~/.docker/config.json 增加，是家目录的 client 端的配置不是 / etc 下的配置
-"experimental": "enabled"
+cat > ~/.docker/config.json <<EOF
+{
+  "experimental": "enabled"
+}
+EOF
 即可永久开启 buildx 命令
 
 mkdir -p /etc/docker && cd /etc/docker && touch daemon.json
