@@ -1,6 +1,10 @@
+
+
 FROM debian AS builder-image
 
 # 构建命令 docker buildx build --no-cache -t python-alpine-l -f Dockerfile .
+# https://segmentfault.com/a/1190000043084266 实践样例
+
 # avoid stuck build due to user prompt
 ARG DEBIAN_FRONTEND=noninteractive
 ARG --security-opt seccomp:unconfined
