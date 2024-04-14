@@ -116,6 +116,7 @@ ln -s /usr/share/zsh/plugins/zsh-autosuggestions /usr/share/oh-my-zsh/custom/plu
 cp -r /usr/share/zsh/plugins/zsh* ~/.oh-my-zsh/plugins
 
 # 下载主题并配置主题
+
 git clone --depth=1 https://gitee.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
 ZSH_THEME="powerlevel10k/powerlevel10k"
 source ~/.zshrc
@@ -127,3 +128,6 @@ p10k configure
 #3.参考：https://cn.linux-console.net/?p=22083
 #4.参考：https://www.cnblogs.com/Likfees/p/14646078.html
 #5.参考：https://www.cnblogs.com/Junglezt/p/16927100.html
+#6.参考https://zenlian.github.io/zsh-zinit/
+#7.参考https://www.mivm.cn/zsh-zinit
+#8.参考https://www.aloxaf.com/2024/02/manage_zsh_shell_with_atuin/
