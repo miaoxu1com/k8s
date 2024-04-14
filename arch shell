@@ -1,4 +1,5 @@
 # 查看当前使用的是什么shell
+cat /etc/shells
 echo $SHELL
 
 # S同步最新的仓库元数据y自动应答 u更新软件 
