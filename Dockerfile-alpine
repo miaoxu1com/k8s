@@ -29,6 +29,11 @@ COPY requirements.txt .
 RUN pip3 install --upgrade --no-cache-dir -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
 
 FROM alpine:latest AS runner-image
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
+    && apk update  \
+    && apk upgrade \
+    && apk add --no-cache --update python3 \
+    && rm -rf /root/.cache/pip
 ENV TZ Asia/Shanghai
 COPY --from=builder-image /home/myuser/venv /home/myuser/venv
 #EXPOSE 5000
@@ -41,4 +46,4 @@ WORKDIR /home/app
 #COPY . /home/app/
 
 # ENTRYPOINT ["/home/app"]
-CMD ["python","main.py"]
+CMD ["python3","main.py"]
