@@ -48,6 +48,82 @@ GOPROXY=https://goproxy.cn makepkg -si
 # 安装完成后可以进行以下操作更新整个系统，同时检查是否安装成功
 yay -Syyu
 
+# 安装ohmyzsh
+方法1.pacman -S zsh zsh-syntax-highlighting zsh-autosuggestions zsh-completions
+方法2.yay -S zsh autojump zsh-syntax-highlighting zsh-autosuggestions zsh-completions
+然后从 GitHub 源码下载 oh my zsh 接管 ZSH 的管理，操作如下
+# 克隆源码
+git clone https://github.com/ohmyzsh/ohmyzsh.git
+# 方法1-进入安装脚本目录并执行安装脚本
+cd ohmyzsh/tools
+bash install.sh
+
+# 方法2-安装 oh-my-zsh-git archlinuxcn 源有打好的包，或者使用 AUR 安装。
+yay -S oh-my-zsh-git
+
+# 我们cd ~/.oh-my-zsh进入oh-my-zsh目录，ls查看工作环境
+# 其中有两个重要的目录plugins和themes, 一个是保存插件的目录和保存主题的目录
+# themes 目录中保存着所有可以使用的主题
+# plugins 保存这所有可用的插件
+# ~/.zshrc zsh 配置文件
+# 更改终端主题和插件
+# .zshrc文件是 zsh 的配置文件，所以我们修改终端主题和插件都需要对该文件进行配置
+# 两个重要的配置选项plugins=(插件列表)，ZSH_THEME="主题名称"
+# 安装 theme 插件
+# 在~/.zshrc文件的plugins选项中加入themes
+
+vim ~/.zshrc
+plugins=(themes)
+# 配置后保存退出终端，再次打开终端可以使用lstheme查看所有主题
+source  ~/.zshrc
+lstheme
+# random是切换任意一个主题
+theme random 
+# 想要每次打开都是固定的主题，需要在.zshrc对ZSH_THEME="主题名称"进行配置，例如配置为random每次打开都是随机的 zsh 主题
+vim ~/.zshrc
+ZSH_THEME="random"
+# 修改完毕保存退出，并退出终端，再次打开就是随机的终端
+source  ~/.zshrc
+
+# 更改默认终端
+chsh -s /bin/zsh
+
+# 默认配置
+cat ~/.zshrc
+cp /usr/share/oh-my-zsh/zshrc ~/.zshrc
+# 安装插件
+# autojump 跳转目录
+yay -S autojump
+# 命令高亮现和自动建议补全
+yay -S zsh-syntax-highlighting zsh-autosuggestions
+# 这两个是 zsh 插件，使用上面的方式配置是不行的，因为 oh-my-zsh 找不到这两个插件（会报 plugin not found）。
+# 为此我们要进行一下特殊处理，创建这两个插件的符号链接到 oh-my-zsh 的自定义插件目录
+# 现在我们的终端已经成为了自己想要个的样子，但是无法判断命令的输入是正确还是错误，需要一个命令的颜色正确提示
+# 在之前我们已经安装了zsh-syntax-highlighting, 这是zsh的插件，oh-my-zsh默认情况下没有安装这个插件，
+# 所以这里我们将zsh的插件复制到oh-my-zsh的plugins目录中，然后修改~/.zshrc文件中加入该插件即可
+# zsh 默认的配置目录在/usr/share/zsh/中，plugins目录中会有两个目录，因为之
+# 前安装了zsh-autosuggestions和zsh-syntax-highlighting代码补全和命令高亮的插件
+# 拷贝zsh-autosuggestions、zsh-syntax-highlighting目录到oh-my-zsh插件的目录
+# 然后将该插件加入到配置文件
+# 修改后，保存退出，重启终端即可
+# 再次进入后，输入的命令就有了正确和错误的高亮, 这里终端的配置就完毕了
+
+
+方法1：
+ln -s /usr/share/zsh/plugins/zsh-syntax-highlighting /usr/share/oh-my-zsh/custom/plugins/
+ln -s /usr/share/zsh/plugins/zsh-autosuggestions /usr/share/oh-my-zsh/custom/plugins/
+方法2：
+cp -r /usr/share/zsh/plugins/zsh* ~/.oh-my-zsh/plugins
+
+# 下载主题并配置主题
+git clone --depth=1 https://gitee.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
+ZSH_THEME="powerlevel10k/powerlevel10k"
+source ~/.zshrc
+日后也可以执行下面命令，修改配置
+p10k configure
+
 #1.参考：https://kaiza-hikaru-del.github.io/my_arch_experience/arch/after/yay/
 #2.参考：https://razonyang.com/zh-hans/archlinux-guide/yay/#:~:text=1%20%24%20git%20clone%20https%3A%2F%2Faur.archlinux.org%2Fyay%202%20%24%20cd,modules%EF%BC%8C%E4%BD%86%E6%98%AF%E8%A2%AB%E5%A2%99%E4%BA%86%EF%BC%8C%E6%89%80%E4%BB%A5%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E8%AE%BE%E7%BD%AE%20GOPROXY%20%E4%BB%A3%E7%90%86%E3%80%82%20%E5%A6%82%E6%9E%9C%E6%B2%A1%E6%B3%95%20git%20clone%EF%BC%8C%E5%8F%AF%E4%BB%A5%E5%88%B0%20YAY%20%E8%BD%AF%E4%BB%B6%E5%8C%85%E9%A1%B5%E9%9D%A2%E4%B8%8B%E8%BD%BD%E5%BF%AB%E7%85%A7%E5%B9%B6%E8%A7%A3%E5%8E%8B%E3%80%82
 #3.参考：https://cn.linux-console.net/?p=22083
+#4.参考：https://www.cnblogs.com/Likfees/p/14646078.html
+#5.参考：https://www.cnblogs.com/Junglezt/p/16927100.html
