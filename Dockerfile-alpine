@@ -16,17 +16,17 @@ FROM alpine:latest AS builder-image
 ARG DEBIAN_FRONTEND=noninteractive
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliRUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \yun.com/g' /etc/apk/repositories \
     && apk update  \
     && apk upgrade \
-    && apk add --no-cache python3 \
+    && apk add --no-cache --update python3 \
     && rm -rf /root/.cache/pip
 # create and activate virtual environment
 # using final folder name to avoid path issues with packages
 RUN python3 -m venv /home/myuser/venv
 ENV PATH="/home/myuser/venv/bin:$PATH"
 COPY requirements.txt .
-RUN pip3 install --no-cache-dir -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
+RUN pip3 install --upgrade --no-cache-dir -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
 
 FROM alpine:latest AS runner-image
 ENV TZ Asia/Shanghai
