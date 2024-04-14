@@ -14,3 +14,5 @@ pacman -Sy docker-buildx
 docker buildx build --no-cache -t alpine-python -f Dockerfile .
 #启动镜像使用镜像name执行命令
 docker exec image_name ls
+#bash shell命令行自动补全
+pacman -Sy bash-completion
