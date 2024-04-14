@@ -1,1 +1,16 @@
-
+#临时启动docker
+#一些通用linux镜像才有bash shell
+docker run --rm -it images_id bash
+#一些专用的linux docker镜像没有bash 比如 alpine只有ash shell sh
+# ls -l /bin 查看系统工具
+docker run --rm -it images_id sh
+#构建镜像测试
+#安装arch安装docker-buildx
+pacman -Sy docker
+systemctl start docker
+systemctl enable docker
+pacman -Sy docker-buildx
+#构建测试命令
+docker buildx build --no-cache -t alpine-python -f Dockerfile .
+#启动镜像使用镜像name执行命令
+docker exec image_name ls
