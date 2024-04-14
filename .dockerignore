@@ -1,3 +1,12 @@
+#**/__pycache__: python 缓存目录
+#**/*venv: Python 虚拟环境目录。很多 Python 开发习惯将虚拟环境目录创建在项目下，一般命名为：.venv 或 venv
+#**/.env: Python 环境变量文件
+#**/.git **/.gitignore: git 相关目录和文件
+#**/.vscode: 编辑器、IDE 相关目录
+#**/charts: Helm Chart 相关文件
+#**/docker-compose*: docker compose 相关文件
+#*.db: 如果使用 sqllite 的相关数据库文件
+#.python-version: pyenv 的 .python-version 文件
 **/__pycache__
 **/*venv
 **/.classpath
