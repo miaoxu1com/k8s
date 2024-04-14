@@ -49,3 +49,4 @@ yay -Syyu
 
 #1.参考：https://kaiza-hikaru-del.github.io/my_arch_experience/arch/after/yay/
 #2.参考：https://razonyang.com/zh-hans/archlinux-guide/yay/#:~:text=1%20%24%20git%20clone%20https%3A%2F%2Faur.archlinux.org%2Fyay%202%20%24%20cd,modules%EF%BC%8C%E4%BD%86%E6%98%AF%E8%A2%AB%E5%A2%99%E4%BA%86%EF%BC%8C%E6%89%80%E4%BB%A5%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E8%AE%BE%E7%BD%AE%20GOPROXY%20%E4%BB%A3%E7%90%86%E3%80%82%20%E5%A6%82%E6%9E%9C%E6%B2%A1%E6%B3%95%20git%20clone%EF%BC%8C%E5%8F%AF%E4%BB%A5%E5%88%B0%20YAY%20%E8%BD%AF%E4%BB%B6%E5%8C%85%E9%A1%B5%E9%9D%A2%E4%B8%8B%E8%BD%BD%E5%BF%AB%E7%85%A7%E5%B9%B6%E8%A7%A3%E5%8E%8B%E3%80%82
+#3.参考：https://cn.linux-console.net/?p=22083
