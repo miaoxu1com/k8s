@@ -16,7 +16,7 @@ FROM alpine:latest AS builder-image
 ARG DEBIAN_FRONTEND=noninteractive
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliRUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \yun.com/g' /etc/apk/repositories \
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
     && apk update  \
     && apk upgrade \
     && apk add --no-cache --update python3 \
