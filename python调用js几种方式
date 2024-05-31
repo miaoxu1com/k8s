@@ -1,0 +1,63 @@
+方式一 nodejs命令行交互
+import subprocess
+import json
+
+# Node.js脚本的路径
+node_script_path = './generate_ids.js'
+
+# 使用subprocess模块调用Node.js执行脚本，并捕获输出
+try:
+    output = subprocess.check_output(['node', node_script_path], text=True)
+    # 解析输出的JSON数据
+    data = json.loads(output)
+    gid_value = data['gid']
+    sid_value = data['sid']
+    counts_value = data['counts']
+
+    print(f"gid: {gid_value}, sid: {sid_value}, counts: {counts_value}")
+except subprocess.CalledProcessError as e:
+    print(f"执行Node.js脚本出错: {e}")
+方式二 使用python代码
+import execjs
+import json
+
+# 定义你的JavaScript代码
+js_code = '''
+// 你的JavaScript代码保持不变
+'''
+
+try:
+    # 尝试获取Node.js环境
+    ctx = execjs.get('Node.js')
+except execjs.RuntimeUnavailableError:
+    print("Node.js没有被找到，请确保它已安装并可由execjs访问。")
+else:
+    # 使用Node.js环境执行JS代码 eval取js的变量
+    result = ctx.eval(js_code)
+    # 调用js函数
+    params=[]
+    result = ctx.call(function,*params)
+
+    # 解析JSON结果
+    data = json.loads(result)
+    gid_value = data['gid']
+    sid_value = data['sid']
+    counts_value = data['counts']
+
+    print(f"gid: {gid_value}, sid: {sid_value}, counts: {counts_value}")
+方式三
+import execjs
+#读取js文件
+with open('t.js',encoding='utf-8') as f:
+    js = f.read()
+ 
+#通过compile命令转成一个js对象
+docjs = execjs.compile(js)
+ 
+#调用function
+res = docjs.call('createGuid')
+print(res)
+ 
+#调用变量
+res = docjs.eval('guid')
+print(res)
