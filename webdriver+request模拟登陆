@@ -1,0 +1,60 @@
+from requestium import Session, Keys
+import time
+import json
+import requests
+import shutil
+from webdriver_manager.chrome import ChromeDriverManager
+
+
+def driver_install():
+    driver_path = ChromeDriverManager().install()
+    print(driver_path)
+    new_path = 'D:/chromedriver/'
+    shutil.copy(driver_path, new_path)
+    driver_path = new_path + 'chromedriver.exe'
+    return driver_path
+def add_cookies(cookie, s):
+    u"往session添加cookies"
+    c = requests.cookies.RequestsCookieJar()
+    for i in cookie:  # 添加cookie到CookieJar
+        # print(i)
+        c.set(i["name"], i["value"])
+    s.cookies.update(c)  # 更新session里的cookie
+    return s
+
+
+# 获取cookie信息
+def getCookie():
+    # webdriver驱动地址根据实际修改
+    s = Session(webdriver_path=driver_install(),
+                browser='chrome',
+                default_timeout=15)
+                #webdriver_options={'arguments': ['headless']})
+    s.driver.get('https://login.daikuan.qihoo.net/login#/')
+    time.sleep(1)
+    s.driver.ensure_element_by_name('username').clear()
+    s.driver.ensure_element_by_name('username').send_keys('miaoxu-jwk')
+    s.driver.ensure_element_by_name('password').clear()
+    s.driver.ensure_element_by_name('password').send_keys('1012460248.Com')
+    s.driver.ensure_element_by_xpath('').click()
+    time.sleep(3)
+    url = s.driver.current_url
+    cookie = s.driver.get_cookies()
+    print(cookie)
+    jsonCookies = json.dumps(cookie)  # 转字符串
+    s.driver.close()
+    return cookie
+
+
+# 测试代码
+if __name__ == '__main__':
+    s = requests.session()
+    cookie = getCookie()
+    # 为requests组件加入cookie信息
+    add_cookies(cookie, s)
+    headers = ""
+    json_data = ""
+    response = requests.post('http://lingxi.daikuan.qihoo.net/dailypaper_v2/list', headers=headers,
+                             json=json_data, verify=False)
+    if response.content:
+        print(response.json())
