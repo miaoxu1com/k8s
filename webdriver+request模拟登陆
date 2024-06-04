@@ -5,6 +5,9 @@ import requests
 import shutil
 from webdriver_manager.chrome import ChromeDriverManager
 
+# webdrivermanager-cn
+# webdriver-manager
+# ez-webdriver
 
 def driver_install():
     driver_path = ChromeDriverManager().install()
