@@ -1,0 +1,128 @@
+from urllib.parse import urlparse
+
+import requests
+
+
+class CasClient:
+    def __init__(self, cas_server_url, service_url):
+        self.cas_server_url = cas_server_url.rstrip('/')
+        self.service_url = service_url.rstrip('/')
+        self.session = requests.session()
+
+    def get_login_form(self):
+        """获取登录页面的表单信息"""
+        headers = {
+            'Sec-Ch-Ua': '"Not_A Brand";v="8", "Chromium";v="120"',
+            'Sec-Ch-Ua-Mobile': '?0',
+            'Sec-Ch-Ua-Platform': '"Windows"',
+            'Upgrade-Insecure-Requests': '1',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.6099.216 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+            'Sec-Fetch-Site': 'cross-site',
+            'Sec-Fetch-Mode': 'navigate',
+            'Sec-Fetch-Dest': 'document',
+            'Referer': 'http:///',
+            'Accept-Language': 'zh-CN,zh;q=0.9',
+            'Priority': 'u=0, i',
+            'Connection': 'close',
+        }
+
+        params = {
+            'service': 'http:///service_url',
+        }
+
+        response = self.session.get('https:///login', params=params, headers=headers,
+                                    verify=False)
+        # 实际应用中可能需要解析HTML来动态获取form的action、input等
+        return response.text  # 返回登录页面内容，这里简化处理
+
+    def login(self, username, password):
+        """登录CAS服务器"""
+        login_form = self.get_login_form()
+
+        # 假设form的action、input等是固定的或已知的，这里简化处理
+        # login_data = {'username': username, 'password': password, "_eventId": "",
+        #               "execution": ""}
+        headers = {
+            'Cache-Control': 'max-age=0',
+            'Sec-Ch-Ua': '"Not_A Brand";v="8", "Chromium";v="120"',
+            'Sec-Ch-Ua-Mobile': '?0',
+            'Sec-Ch-Ua-Platform': '"Windows"',
+            'Upgrade-Insecure-Requests': '1',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.6099.216 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+            'Sec-Fetch-Site': 'same-origin',
+            'Sec-Fetch-Mode': 'navigate',
+            'Sec-Fetch-User': '?1',
+            'Sec-Fetch-Dest': 'document',
+            'Accept-Language': 'zh-CN,zh;q=0.9',
+            'Priority': 'u=0, i'
+        }
+        # login_url = urljoin(self.cas_server_url, 'login')  # 登录提交的URL
+        data = {
+            'username': '',
+            'password': ''
+        }
+
+        response = self.session.post('https:///login', data=data, allow_redirects=False,
+                                     headers=headers)
+        # 跟随重定向获取服务票据
+        if response.status_code == 302:
+            service_ticket = urlparse(response.headers['Location']).query.split('ticket=')[1]
+            return self.validate_service_ticket(service_ticket)
+        else:
+            raise Exception("Login failed")
+
+    def validate_service_ticket(self, ticket):
+        """验证服务票据并访问受保护资源"""
+        headers = {
+            'Accept': 'application/json, text/plain, */*',
+            'bizCode': 'undefined',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.6099.216 Safari/537.36',
+            'workspaceCode': 'undefined',
+            'Accept-Language': 'zh-CN,zh;q=0.9',
+            'Connection': 'close',
+        }
+        validation_url = ''
+        response = self.session.get(validation_url, params=params, headers=headers, verify=False)
+        print(response.text)
+
+        json_data = {
+            'page': 1,
+            'pageSize': 20,
+            'totalCount': 4,
+            'startDate': '2024-05-28T12:51:12.939Z',
+            'endDate': '2024-06-04T12:51:12.939Z',
+        }
+
+        response = self.session.post(
+            '',
+            headers=headers,
+            json=json_data,
+            verify=False,
+        )
+        print(response.text)
+
+        # if "yes" in response.text:  # 简化处理，实际响应格式需参考CAS服务器文档
+        #     return True  # 验证成功
+        # else:
+        #     return False  # 验证失败
+
+
+if __name__ == "__main__":
+
+	# 如果html页面存在动态字段使用urlparse 提取提交的动态字段
+	#  注意：cas存在区别直接访问service页面没有登陆应该会被302重定向到登陆页面分析直接访问service链接有没有被重定向到login页
+	# 登陆成功的关键是要和手动操作一样代码请求也要先获取登陆页面获取一个服务分发的session，
+	# 然后发起登陆接口的请求，登陆成功后header的响应头中分发tick令牌提取之后带上令牌访问服务
+	# cas的关键是找到302页面取服务的tick令牌，分析是登陆之前302还是登陆之后302
+	# 代码中的关键就是请求的时候加上allow_redirects=False参数不要被自动重定向，返回302页面，从302页面提取访问service的tick令牌
+    cas_server = 'https:///login'
+    service_url = 'http:///service_url'
+
+    cas_client = CasClient(cas_server, service_url)
+    res = cas_client.login('', '')
+    if res:
+        print("Login successful!")
+  
