@@ -1,0 +1,9 @@
+{
+"registry-mirrors": [
+"https://nol6uuul.mirror.aliyuncs.com",
+"https://registry.docker-cn.com",
+        "https://docker.mirrors.ustc.edu.cn",
+        "https://dockerhub.azk8s.cn",
+        "http://hub-mirror.c.163.com"
+]
+}
