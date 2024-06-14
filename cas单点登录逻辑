@@ -36,7 +36,7 @@ class CasClient:
             'Priority': 'u=0, i',
             'Connection': 'close',
         }
-
+	# 这里一定要是login?service的地址
         params = {
             'service': 'http:///service_url',
         }
