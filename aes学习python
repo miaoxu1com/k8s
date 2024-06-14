@@ -1,0 +1,47 @@
+import struct
+from binascii import hexlify
+
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import padding
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+
+# 给定的密钥和IV的数值
+key_numbers = [1, 2, 3, 4]
+iv_numbers = [1, 2, 3, 4]
+
+# 将整数列表转换为16字节的bytes
+def numbers_to_bytes(numbers):
+    return b''.join(struct.pack('>I', num) for num in numbers)
+
+# 需要加密的明文
+key = numbers_to_bytes(key_numbers)
+iv = numbers_to_bytes(iv_numbers)
+
+# 创建AES-128 CBC模式的Cipher对象
+backend = default_backend()
+cipher_user = Cipher(algorithms.AES(key), modes.CBC(iv), backend=backend)
+cipher_password = Cipher(algorithms.AES(key), modes.CBC(iv), backend=backend)
+user_plain = b''
+password_plain = b''
+
+# 加密函数
+def encrypt(plain_text, cipher_obj):
+    encryptor = cipher_obj.encryptor()
+    padder = padding.PKCS7(128).padder()
+    padded_text = padder.update(plain_text) + padder.finalize()
+    ciphertext = encryptor.update(padded_text) + encryptor.finalize()
+    ciphertext_hex = hexlify(ciphertext).decode('utf-8')
+    return ciphertext_hex
+
+# 执行加密
+def get_user_info():
+    encrypted_user = encrypt(user_plain, cipher_user)
+    encrypted_password = encrypt(password_plain, cipher_password)
+    return encrypted_user, encrypted_password
+
+
+encrypted_user, encrypted_password = get_user_info()
+
+if __name__ == '__main__':
+    print('用户信息加密后的密文:', encrypted_user)
+    print('密码加密后的密文:', encrypted_password)
