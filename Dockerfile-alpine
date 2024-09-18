@@ -1,4 +1,6 @@
 FROM alpine:latest AS builder-image
+# pypi docker 代理
+# https://www.robopenguins.com/pypi-proxy/
 # avoid stuck build due to user prompt
 # ENV PYTHONDONTWRITEBYTECODE 1: 建议构建 Docker 镜像时一直为 1, 防止 python 将 pyc 文件写入硬盘
 # ENV PYTHONUNBUFFERED 1: 建议构建 Docker 镜像时一直为 1, 防止 python 缓冲 (buffering) stdout 和 stderr, 以便更容易地进行容器日志记录
