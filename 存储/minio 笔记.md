@@ -1,3 +1,6 @@
+
+云原生代表需要使用容器技术进行部署
+automq
 docker 监控容器的cpu、内存、网络、io情况
 https://baiyp.ren/MinIO.html
 Docker 搭建磁盘监控工具 Doku
