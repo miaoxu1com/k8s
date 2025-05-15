@@ -21,7 +21,9 @@
 
 **首先需要在本地机器或 Kubernetes 集群上安装 Helm**。
 
-**Helm 只能在 k8s 中使用，不能在 docker 中使用**
+**Helm 只能在 k8s 中使用，不能在 docker 中使用，Helm是模板，有模板语法，模板函数，支持逻辑判断，可以实现动态生成目标资源清单**
+
+**docker不支持helm，需要自己编写yaml模板替换脚本，实现动态渲染资源清单**
 
 可以从 Helm 官方网站下载适合自己平台的二进制文件，或使用包管理器安装 Helm，安装教程参考 [https://helm.sh](https://helm.sh/)
 
